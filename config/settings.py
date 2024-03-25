@@ -44,12 +44,21 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # local apps
+]
+
+
+THIRD_PARTY_APPS = [
+    'jazzmin',
+    'rest_framework',
+    "drf_yasg"
+]
+
+LOCAL_APPS = [
     'room_app',
 
-    # 3rd party
-    'rest_framework',
 ]
+
+INSTALLED_APPS = THIRD_PARTY_APPS + INSTALLED_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

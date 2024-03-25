@@ -1,6 +1,6 @@
 from rest_framework import generics
 from .pagination import CustomPagination
-from . import serializers
+from .api import serializers
 from .models import Room, Availability
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -28,9 +28,9 @@ class RoomListView(generics.ListAPIView):
 
 
 class RoomDetailView(APIView):
-    def get(self, request, pk: int) -> Room:
+    def get(self, request, id: int) -> Room:
         try:
-            room = Room.objects.get(id=pk)
+            room = Room.objects.get(pk=id)
         except Room.DoesNotExist:
             return Response(
                 {"error": "topilmadi"},
@@ -65,7 +65,9 @@ class RoomAvailabilityView(APIView):
         availabilities = Availability.objects.filter(room=room, start__date=query_date)
 
         # Get the booked time ranges
-        booked_ranges = [(availability.start.replace(tzinfo=timezone.utc), availability.end.replace(tzinfo=timezone.utc)) for availability in availabilities]
+        booked_ranges = [
+            (availability.start.replace(tzinfo=timezone.utc), availability.end.replace(tzinfo=timezone.utc)) for
+            availability in availabilities]
 
         # Calculate the available time ranges
         start_of_day = datetime.combine(query_date, datetime.min.time()).replace(tzinfo=timezone.utc)
@@ -96,6 +98,9 @@ class RoomAvailabilityView(APIView):
             })
 
         return Response(formatted_availabilities, status=status.HTTP_200_OK)
+
+
+
 
     def put(self, request, pk: int) -> Response:
         # Get room object
@@ -152,6 +157,3 @@ class RoomReservation(APIView):
             return Response({'message': 'xona muvaffaqiyatli band qilindi'}, status=status.HTTP_201_CREATED)
         else:
             return Response(resident_serializer.errors)
-
-
-

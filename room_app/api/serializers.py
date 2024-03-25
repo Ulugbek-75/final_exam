@@ -20,3 +20,13 @@ class ResidentSerializer(serializers.ModelSerializer):
         fields = ['name', ]
 
 
+class ResidentDetailSerializer(serializers.ModelSerializer):
+    room = RoomSerializer()
+    availability = AvailabilitySerializer(many=True)
+
+    class Meta:
+        model = Resident
+        fields = ['name', 'room', 'availability']
+
+
+

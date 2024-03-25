@@ -9,3 +9,4 @@ class RoomType(Enum):
     @classmethod
     def choices(cls):
         return ((i.name, i.value) for i in cls)
+
