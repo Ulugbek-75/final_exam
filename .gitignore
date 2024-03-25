@@ -18,6 +18,7 @@ Scripts
 # C extensions
 *.so
 venv
+.env
 # Distribution / packaging
 .Python
 build/
