@@ -43,6 +43,8 @@ class BookingRoom(models.Model):
     resident_name = models.CharField(max_length=50,)
     room_availability = models.ForeignKey(RoomAvailability, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    start = models.DateTimeField()
+    end = models.DateTimeField()
 
     def __str__(self):
         return f"{self.resident_name} {self.room.name}"
