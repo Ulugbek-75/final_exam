@@ -93,13 +93,13 @@ class RoomAvailabilityApiView(APIView):
             date_obj = today
         result = check_day(pk)
         if isinstance(result, Room):
-            room_availability = BookingRoom.objects.filter(Q(room=result) & Q(start__date=date_obj)).order_by('start')
+            room_availability = RoomAvailability.objects.filter(Q(room_id=pk) & Q(start__date=date_obj))
             if room_availability:
                 counter = 0
                 date_format = "%d-%m-%Y %H:%M:%S"
                 last = room_availability.count()
                 start_time = f"{date_obj1} 00:00:00"
-                start_date = datetime.strptime(start_time,date_format)
+                start_date = datetime.strptime(start_time, date_format)
 
                 result = {}
 
@@ -110,12 +110,12 @@ class RoomAvailabilityApiView(APIView):
                         result[counter] = {
                             "start": start_time,
                             "end": i_start
-                            }
+                        }
                     start_date = i.end
                     start_time = i_end
-                    if last == counter+1:
+                    if last == counter + 1:
                         if str(i.end.time()) != '23:59:59':
-                            result[counter+1] = {
+                            result[counter + 1] = {
                                 "start": start_time,
                                 "end": f"{date_obj1} 23:59:59"
                             }

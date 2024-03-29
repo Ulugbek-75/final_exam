@@ -26,8 +26,9 @@ class RoomAvailability(models.Model):
     start = models.DateTimeField()
     end = models.DateTimeField()
 
+
     def __str__(self):
-        return f"{self.room.name} {self.start}"
+        return f"{self.room.name} {self.start} {self.end}"
 
     def clean(self):
         today = datetime.date.today()
@@ -40,6 +41,8 @@ class RoomAvailability(models.Model):
 
 
 class BookingRoom(models.Model):
+    start = models.DateTimeField()
+    end = models.DateTimeField()
     resident_name = models.CharField(max_length=50,)
     room_availability = models.ForeignKey(RoomAvailability, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)

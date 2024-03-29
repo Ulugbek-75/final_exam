@@ -1,7 +1,7 @@
 from datetime import date
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from room_app.models import BookingRoom, Room, RoomAvailability
+from room_app.models import Room, RoomAvailability, BookingRoom
 
 
 class RoomSerializer(serializers.ModelSerializer):
